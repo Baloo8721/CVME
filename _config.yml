@@ -1,9 +1,0 @@
-# GitHub Pages configuration
-# Set the default page to index.html
-include: ["index.html"]
-
-# Optional: Exclude files from being processed
-exclude: ["node_modules/", "*.md"]
-
-# Optional: Set the theme (if using Jekyll)
-theme: jekyll-theme-minimal
