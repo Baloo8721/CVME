@@ -11,10 +11,7 @@ A clean, responsive personal resume/CV website showcasing professional experienc
 
 ## Setup
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Baloo8721/CVME.git
-   ```
+
 
 2. Open `cv.html` in your web browser to view the resume.
 
