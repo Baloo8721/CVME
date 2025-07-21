@@ -3,124 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christopher Tyler Belisle - Resume</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>C. Tyler Belisle - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            color: #1f2937;
-        }
-        .section-header {
-            position: relative;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background-color: #3b82f6;
-        }
-        .job-card {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-        .job-card:hover {
-            transform: translateY(-4px);
-        }
-        .job-title {
-            font-weight: 600;
-            color: #1f2937;
-        }
-        .job-date {
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-        .contact-link {
-            color: #3b82f6;
-            transition: color 0.2s ease;
-        }
-        .contact-link:hover {
-            color: #1d4ed8;
-        }
-        .education-item {
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-        .education-title {
-            font-weight: 600;
-            color: #1f2937;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="antialiased">
-    <div class="container max-w-3xl mx-auto px-4 py-6 sm:py-12 sm:px-6 lg:px-8">
-        <!-- Header -->
-        <header class="text-center mb-10 sm:mb-12">
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Christopher Tyler Belisle</h1>
-            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base text-gray-600 mt-3">
-                <a href="mailto:TylerBelisleFL@gmail.com" class="contact-link">TylerBelisleFL@gmail.com</a>
-                <span>•</span>
-                <span>Orlando, FL</span>
-            </div>
+<body>
+    <div class="container">
+        <header>
+            <h1>C. Tyler Belisle</h1>
         </header>
-
-        <!-- Work History -->
-        <section class="mb-10 sm:mb-12">
-            <h2 class="text-lg sm:text-xl font-semibold section-header">Work History</h2>
-            <div class="space-y-4 sm:space-y-6">
-                <div class="job-card">
-                    <h3 class="job-title">Realtor/Real Estate</h3>
-                    <p class="job-date">2023 - Present</p>
-                    <p class="mt-2 text-gray-700">Independent Real Estate Professional</p>
-                </div>
-                <!-- Add more job entries as needed -->
+        <section id="about">
+            <h2>About Me</h2>
+            <p class="about-text">
+                A passionate and driven professional with a diverse background spanning from neonatal critical care to real estate and web development. I thrive on solving complex problems, whether it's in a high-pressure medical environment or building innovative digital tools. My goal is to leverage my technical skills and hands-on experience to create meaningful and impactful solutions.
+            </p>
+            <p style="margin: 1.5rem 0 1.5rem 0;">
+                <a href="mailto:TylerBelisleFL@gmail.com" style="color: #a5b4fc; text-decoration: none;">TylerBelisleFL@gmail.com</a>
+            </p>
+            <div class="button-container">
+                <a href="cv.html" class="btn btn-primary">View CV</a>
             </div>
         </section>
-
-        <!-- Education -->
-        <section class="mb-10 sm:mb-12">
-            <h2 class="text-lg sm:text-xl font-semibold section-header">Education</h2>
-            <div class="space-y-2">
-                <div class="education-item">
-                    <div class="education-title">Bachelor's Degree</div>
-                    <div>University of Central Florida</div>
-                    <div class="text-sm text-gray-500">Graduated: 2018</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills -->
-        <section class="mb-10 sm:mb-12">
-            <h2 class="text-lg sm:text-xl font-semibold section-header">Skills</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
-                <span class="bg-white px-3 py-2 rounded-md shadow-sm text-sm">Real Estate</span>
-                <span class="bg-white px-3 py-2 rounded-md shadow-sm text-sm">Client Relations</span>
-                <span class="bg-white px-3 py-2 rounded-md shadow-sm text-sm">Negotiation</span>
-                <span class="bg-white px-3 py-2 rounded-md shadow-sm text-sm">Market Analysis</span>
-                <span class="bg-white px-3 py-2 rounded-md shadow-sm text-sm">Property Valuation</span>
-                <span class="bg-white px-3 py-2 rounded-md shadow-sm text-sm">Contract Management</span>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section class="text-center">
-            <h2 class="text-lg sm:text-xl font-semibold section-header">Contact Me</h2>
-            <p class="mb-4">Feel free to reach out for professional inquiries</p>
-            <a href="mailto:TylerBelisleFL@gmail.com" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-md transition-colors">
-                Email Me
-            </a>
-        </section>
-    </div>
-</body>
 
         <section id="projects">
             <h2>Projects</h2>
