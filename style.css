@@ -1,0 +1,108 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: #f9fafb;
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 0.75rem;
+}
+
+.about-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    color: #d1d5db;
+}
+
+.button-container {
+    margin-bottom: 4rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 7px 25px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(145deg, #4b5563, #374151);
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 7px 25px rgba(75, 85, 99, 0.4);
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    background: linear-gradient(145deg, #2a3a50, #1d2838);
+    border-radius: 15px;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: #f9fafb;
+    border: 1px solid #374151;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3),
+                -5px -5px 15px rgba(255, 255, 255, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5),
+                -10px -10px 30px rgba(255, 255, 255, 0.05);
+}
+
+.project-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.project-description {
+    font-size: 1rem;
+    color: #d1d5db;
+    line-height: 1.5;
+}

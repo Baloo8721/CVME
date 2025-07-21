@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christopher Tyler Belisle - Resume</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        .section-header {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #3b82f6;
+        }
+        .job-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .job-card:hover {
+            transform: translateY(-4px);
+        }
+        .job-title {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .job-date {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .contact-link {
+            color: #3b82f6;
+            transition: color 0.2s ease;
+        }
+        .contact-link:hover {
+            color: #1d4ed8;
+        }
+        .education-item {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .education-title {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .job-card {
+                padding: 1rem;
+            }
+            .section-header {
+                font-size: 1.25rem;
+            }
+            .references-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container max-w-3xl mx-auto px-4 py-6 sm:py-12 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <header class="text-center mb-10 sm:mb-12">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Christopher Tyler Belisle</h1>
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base text-gray-600 mt-3">
+                <a href="mailto:TylerBelisleFL@gmail.com" class="contact-link">TylerBelisleFL@gmail.com</a>
+                <span class="hidden sm:inline">•</span>
+                <span>Land O' Lakes, FL</span>
+                <span class="hidden sm:inline">•</span>
+                <a href="resume.pdf" class="flex items-center text-gray-800 hover:text-blue-600 transition-colors" download="resume.pdf">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span>PDF</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- About Me -->
+        <section class="mb-10 sm:mb-12">
+            <h2 class="text-lg sm:text-xl font-semibold section-header">About Me</h2>
+            <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Determined and hands-on professional eager to start an electrician apprenticeship and work toward journeyman status. Ready to bring problem-solving skills, leadership experience, and drive to succeed in the electrical trade.
+            </p>
+        </section>
+
+        <!-- Skills -->
+        <section class="mb-10 sm:mb-12">
+            <h2 class="text-lg sm:text-xl font-semibold section-header">Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="job-card">
+                    <h3 class="font-medium text-gray-900">Hands-On</h3>
+                    <p class="text-gray-600 text-sm">Power tools from construction, medical field, automotive, homeownership; lifelong learner/DIY</p>
+                </div>
+                <div class="job-card">
+                    <h3 class="font-medium text-gray-900">Technical</h3>
+                    <p class="text-gray-600 text-sm">Programming, automation, web development</p>
+                </div>
+                <div class="job-card">
+                    <h3 class="font-medium text-gray-900">Interest</h3>
+                    <p class="text-gray-600 text-sm">Industrial/commercial electrical, PLC systems/automation, robotics</p>
+                </div>
+                <div class="job-card">
+                    <h3 class="font-medium text-gray-900">Leadership & Strengths</h3>
+                    <p class="text-gray-600 text-sm">Managing teams, training staff, improving workflows; quick learner, thrives under pressure, strong communicator</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work History -->
+        <section class="mb-10 sm:mb-12">
+            <h2 class="text-lg sm:text-xl font-semibold section-header">Work History</h2>
+            <div class="space-y-4 sm:space-y-6">
+                <div class="job-card">
+                    <h3 class="job-title">Realtor/Real Estate</h3>
+                    <p class="job-date">Keller Williams Brokerage, Tampa, FL | Aug 2021 - Present</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Solve real estate problems with analysis and clear communication</li>
+                        <li>Built A.I. automation tools for CRM/referral systems</li>
+                    </ul>
+                </div>
+                <div class="job-card">
+                    <h3 class="job-title">Parts/Service/Sales Team Leader</h3>
+                    <p class="job-date">BMW/MINI & Jerry Ulm Jeep/Dodge, Tampa, FL | May 2018 - 2021</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Managed accessory department, improved sales through workflows/training</li>
+                        <li>Led teams, handled scheduling/operations</li>
+                        <li>Used diagnostic tools for automotive problem-solving</li>
+                    </ul>
+                </div>
+                <div class="job-card">
+                    <h3 class="job-title">Neonatal Critical Care Paramedic/ER & Transport</h3>
+                    <p class="job-date">St. Joseph's Children's Hospital, Tampa, FL | Mar 2015 - May 2018</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Critical care in fast-paced environments (ER, ambulance, helicopter, fixed-wing)</li>
+                        <li>Monitored EKGs, managed advanced care/medications</li>
+                        <li>Emergency vehicle operator</li>
+                    </ul>
+                </div>
+                <div class="job-card">
+                    <h3 class="job-title">Paramedic</h3>
+                    <p class="job-date">AMR (American Medical Response), Tampa, FL | May 2012 - Mar 2015</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Delivered life support using advanced medical equipment</li>
+                        <li>Managed IVs, airways, drug dosing, EKGs under pressure</li>
+                    </ul>
+                </div>
+                <div class="job-card">
+                    <h3 class="job-title">Mortgage Law Specialist</h3>
+                    <p class="job-date">Wolfe Law & Associates, Tampa, FL | May 2007 - May 2014</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Quality control/auditing of mortgage documents</li>
+                        <li>Coordinated with clients/courts</li>
+                        <li>Technical support to lender clients</li>
+                    </ul>
+                </div>
+                <div class="job-card">
+                    <h3 class="job-title">Laborer</h3>
+                    <p class="job-date">Lazzara Concrete & Masonry, Tampa, FL | Mar 2004 - 2010</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Operated power tools/equipment on construction sites</li>
+                        <li>Gained hands-on trade experience</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="mb-10 sm:mb-12">
+            <h2 class="text-lg sm:text-xl font-semibold section-header">Education</h2>
+            <div class="job-card">
+                <ul class="list-none text-sm space-y-3">
+                    <li>
+                        <span class="education-title">Skillcat (Online)</span>
+                        <p class="education-item">Electrical Trade School Certificate</p>
+                    </li>
+                    <li>
+                        <span class="education-title">Realtor</span>
+                        <p class="education-item">July 2021, License #SL3510156</p>
+                    </li>
+                    <li>
+                        <span class="education-title">Hillsborough Community College/FL Medical Training Institute</span>
+                        <p class="education-item">State Certified Paramedic (Feb 2012), State Fire Fighter II (Oct 2012), EMT (2012)</p>
+                    </li>
+                    <li>
+                        <span class="education-title">Gaither High School, Tampa, FL</span>
+                        <p class="education-item">High School Diploma (May 2005)</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+</body>
+</html>
