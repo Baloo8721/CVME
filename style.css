@@ -235,3 +235,22 @@ h2 {
     background: #111827;
     transition: height 0.3s;
 }
+
+@media (max-width: 699px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        max-width: 96vw;
+        min-width: 90vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .project-card iframe {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
