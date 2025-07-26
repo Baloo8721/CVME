@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <canvas id="bgCanvas"></canvas>
     <div class="container">
         <header>
             <h1>C. Tyler Belisle</h1>
@@ -89,6 +90,103 @@
             </div>
         </section>
     </div>
+
+    <script>
+        // Animated Geometric Background
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Animation variables
+        let time = 0;
+        let scrollY = 0;
+
+        // Track scroll
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+        });
+
+        // Geometric pattern function
+        function drawPattern() {
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Clear with gradient background
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#111827');
+            gradient.addColorStop(1, '#1f2937');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw geometric shapes
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.1)';
+            ctx.lineWidth = 1;
+
+            const spacing = 80;
+            const offsetX = (time * 0.5) % spacing;
+            const offsetY = (scrollY * 0.1 + time * 0.3) % spacing;
+
+            // Draw grid of hexagons
+            for (let x = -spacing; x < width + spacing; x += spacing) {
+                for (let y = -spacing; y < height + spacing; y += spacing) {
+                    const centerX = x + offsetX;
+                    const centerY = y + offsetY;
+
+                    // Create hexagon
+                    ctx.beginPath();
+                    for (let i = 0; i < 6; i++) {
+                        const angle = (i * Math.PI) / 3 + time * 0.01;
+                        const radius = 20 + Math.sin(time * 0.02 + x * 0.01) * 5;
+                        const px = centerX + Math.cos(angle) * radius;
+                        const py = centerY + Math.sin(angle) * radius;
+
+                        if (i === 0) {
+                            ctx.moveTo(px, py);
+                        } else {
+                            ctx.lineTo(px, py);
+                        }
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    // Add subtle connecting lines
+                    if (Math.random() > 0.7) {
+                        ctx.beginPath();
+                        ctx.moveTo(centerX, centerY);
+                        ctx.lineTo(centerX + Math.cos(time * 0.05) * 40,
+                            centerY + Math.sin(time * 0.05) * 40);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Add floating particles
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
+            for (let i = 0; i < 20; i++) {
+                const x = (Math.sin(time * 0.02 + i) * width * 0.3) + width * 0.5;
+                const y = (Math.cos(time * 0.03 + i * 0.5) * height * 0.3) + height * 0.5 + scrollY * 0.1;
+                const size = 2 + Math.sin(time * 0.1 + i) * 1;
+
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            time += 0.02;
+            requestAnimationFrame(drawPattern);
+        }
+
+        // Start animation
+        drawPattern();
+    </script>
 </body>
 
 </html>
