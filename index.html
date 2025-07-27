@@ -92,99 +92,246 @@
     </div>
 
     <script>
-        // Animated Geometric Background
+        // --- Animated Tech Mesh Background with ETH Morph ---
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Set canvas size
+        // Responsive mesh settings
+        function getMeshSettings() {
+            const w = window.innerWidth;
+            if (w < 600) return { NODE_COUNT: 16, SPACING: 80, ANIMATION_RADIUS: 14 };
+            if (w < 1000) return { NODE_COUNT: 24, SPACING: 70, ANIMATION_RADIUS: 18 };
+            return { NODE_COUNT: 32, SPACING: 60, ANIMATION_RADIUS: 22 };
+        }
+        let NODE_COUNT = 32, SPACING = 60, ANIMATION_RADIUS = 22;
+        const NODE_RADIUS = 3;
+        const LINE_COLOR = 'rgba(59, 130, 246, 0.13)';
+        const FILL_COLOR = 'rgba(59, 130, 246, 0.08)';
+        const NODE_COLOR = 'rgba(59, 130, 246, 0.25)';
+
+        // ETH logo points (normalized, centered)
+        const ETH_LOGO_POINTS = [
+            { x: 0.5, y: 0.08 }, // top
+            { x: 0.18, y: 0.38 }, // left
+            { x: 0.82, y: 0.38 }, // right
+            { x: 0.5, y: 0.52 }, // center
+            { x: 0.5, y: 0.60 }, // split (between center and bottom)
+            { x: 0.18, y: 0.92 }, // left bottom
+            { x: 0.82, y: 0.92 }  // right bottom
+        ];
+
+        // Helper to get ETH logo node positions for current canvas size
+        function getETHNodePositions(width, height) {
+            return ETH_LOGO_POINTS.map(pt => ({
+                x: pt.x * width,
+                y: pt.y * height
+            }));
+        }
+
+        // Helper to draw the ETH logo outline and internal triangles
+        function drawETHLogo(ctx, points) {
+            // Top triangle
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y); // top
+            ctx.lineTo(points[1].x, points[1].y); // left
+            ctx.lineTo(points[2].x, points[2].y); // right
+            ctx.closePath();
+            ctx.strokeStyle = LINE_COLOR;
+            ctx.stroke();
+
+            // Middle vertical line
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            ctx.lineTo(points[3].x, points[3].y);
+            ctx.lineTo(points[4].x, points[4].y);
+            ctx.stroke();
+
+            // Bottom triangle
+            ctx.beginPath();
+            ctx.moveTo(points[4].x, points[4].y); // split
+            ctx.lineTo(points[5].x, points[5].y); // left bottom
+            ctx.lineTo(points[6].x, points[6].y); // right bottom
+            ctx.closePath();
+            ctx.strokeStyle = LINE_COLOR;
+            ctx.stroke();
+
+            // Connect center to left/right
+            ctx.beginPath();
+            ctx.moveTo(points[3].x, points[3].y);
+            ctx.lineTo(points[1].x, points[1].y);
+            ctx.moveTo(points[3].x, points[3].y);
+            ctx.lineTo(points[2].x, points[2].y);
+            ctx.stroke();
+        }
+
+        // Node structure
+        let nodes = [];
+        function randomNode(width, height) {
+            const angle = Math.random() * Math.PI * 2;
+            return {
+                baseX: Math.random() * width,
+                baseY: Math.random() * height,
+                angle: angle,
+                speed: 0.07 + Math.random() * 0.12, // slower, smoother
+                offset: Math.random() * 1000
+            };
+        }
+
+        function createNodes() {
+            nodes = [];
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodes.push(randomNode(canvas.width, canvas.height));
+            }
+        }
+
+        function getNodePos(node, t) {
+            // Gentle circular drift, slower
+            return {
+                x: node.baseX + Math.cos(t * node.speed + node.offset) * ANIMATION_RADIUS,
+                y: node.baseY + Math.sin(t * node.speed + node.offset) * ANIMATION_RADIUS
+            };
+        }
+
+        // Helper: distance between two points
+        function dist(a, b) {
+            return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        }
+
+        // Helper: find triangles (simple greedy mesh)
+        function getTriangles(positions) {
+            let triangles = [];
+            for (let i = 0; i < positions.length; i++) {
+                for (let j = i + 1; j < positions.length; j++) {
+                    for (let k = j + 1; k < positions.length; k++) {
+                        // Only connect close nodes
+                        if (
+                            dist(positions[i], positions[j]) < 180 &&
+                            dist(positions[j], positions[k]) < 180 &&
+                            dist(positions[k], positions[i]) < 180
+                        ) {
+                            triangles.push([positions[i], positions[j], positions[k]]);
+                        }
+                    }
+                }
+            }
+            return triangles;
+        }
+
+        // Resize and re-create nodes
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            const settings = getMeshSettings();
+            NODE_COUNT = settings.NODE_COUNT;
+            SPACING = settings.SPACING;
+            ANIMATION_RADIUS = settings.ANIMATION_RADIUS;
+            createNodes();
         }
-
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
         // Animation variables
         let time = 0;
         let scrollY = 0;
-
-        // Track scroll
         window.addEventListener('scroll', () => {
             scrollY = window.scrollY;
         });
 
-        // Geometric pattern function
+        function lerp(a, b, t) {
+            return a + (b - a) * t;
+        }
+
         function drawPattern() {
             const width = canvas.width;
             const height = canvas.height;
-
-            // Clear with gradient background
+            ctx.clearRect(0, 0, width, height);
+            // Gradient background
             const gradient = ctx.createLinearGradient(0, 0, width, height);
             gradient.addColorStop(0, '#111827');
             gradient.addColorStop(1, '#1f2937');
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, width, height);
 
-            // Draw geometric shapes
-            ctx.strokeStyle = 'rgba(59, 130, 246, 0.1)';
-            ctx.lineWidth = 1;
+            // Animate node positions
+            const meshPositions = nodes.map(n => getNodePos(n, time));
 
-            const spacing = 80;
-            const offsetX = (time * 0.5) % spacing;
-            const offsetY = (scrollY * 0.1 + time * 0.3) % spacing;
+            // ETH symbol target positions
+            const ethPositions = getETHNodePositions(width, height);
 
-            // Draw grid of hexagons
-            for (let x = -spacing; x < width + spacing; x += spacing) {
-                for (let y = -spacing; y < height + spacing; y += spacing) {
-                    const centerX = x + offsetX;
-                    const centerY = y + offsetY;
+            // Morph factor: 0 (top of page, random mesh), 1 (scrolled down, ETH symbol)
+            const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+            const morph = Math.min(1, scrollY / (maxScroll * 0.5));
+            const snapThreshold = 0.95;
 
-                    // Create hexagon
-                    ctx.beginPath();
-                    for (let i = 0; i < 6; i++) {
-                        const angle = (i * Math.PI) / 3 + time * 0.01;
-                        const radius = 20 + Math.sin(time * 0.02 + x * 0.01) * 5;
-                        const px = centerX + Math.cos(angle) * radius;
-                        const py = centerY + Math.sin(angle) * radius;
-
-                        if (i === 0) {
-                            ctx.moveTo(px, py);
-                        } else {
-                            ctx.lineTo(px, py);
-                        }
-                    }
-                    ctx.closePath();
-                    ctx.stroke();
-
-                    // Add subtle connecting lines
-                    if (Math.random() > 0.7) {
+            let positions;
+            if (morph < snapThreshold) {
+                // Interpolate all mesh nodes toward ETH points
+                const ethPositions = getETHNodePositions(width, height);
+                positions = meshPositions.map((p, i) => {
+                    const target = ethPositions[i % ethPositions.length];
+                    return {
+                        x: lerp(p.x, target.x, morph),
+                        y: lerp(p.y, target.y, morph)
+                    };
+                });
+                // Draw mesh as before (triangles, lines, nodes)
+                const triangles = getTriangles(positions);
+                for (let i = 0; i < triangles.length; i++) {
+                    const tri = triangles[i];
+                    // Slow down fill blinking
+                    if ((Math.floor(time * 0.5) + i) % 7 === 0) {
                         ctx.beginPath();
-                        ctx.moveTo(centerX, centerY);
-                        ctx.lineTo(centerX + Math.cos(time * 0.05) * 40,
-                            centerY + Math.sin(time * 0.05) * 40);
+                        ctx.moveTo(tri[0].x, tri[0].y);
+                        ctx.lineTo(tri[1].x, tri[1].y);
+                        ctx.lineTo(tri[2].x, tri[2].y);
+                        ctx.closePath();
+                        ctx.fillStyle = FILL_COLOR;
+                        ctx.fill();
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo(tri[0].x, tri[0].y);
+                        ctx.lineTo(tri[1].x, tri[1].y);
+                        ctx.lineTo(tri[2].x, tri[2].y);
+                        ctx.closePath();
+                        ctx.strokeStyle = LINE_COLOR;
                         ctx.stroke();
                     }
                 }
+                // Draw nodes
+                ctx.fillStyle = NODE_COLOR;
+                for (let i = 0; i < positions.length; i++) {
+                    ctx.beginPath();
+                    ctx.arc(positions[i].x, positions[i].y, NODE_RADIUS, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            } else {
+                // Snap to ETH logo: use only the 7 points
+                const ethPoints = getETHNodePositions(width, height);
+                drawETHLogo(ctx, ethPoints);
+                // Draw only the 7 nodes
+                ctx.fillStyle = NODE_COLOR;
+                ethPoints.forEach(point => {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, NODE_RADIUS, 0, Math.PI * 2);
+                    ctx.fill();
+                });
             }
 
-            // Add floating particles
-            ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
+            // Floating particles (unchanged)
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.3)';
             for (let i = 0; i < 20; i++) {
                 const x = (Math.sin(time * 0.02 + i) * width * 0.3) + width * 0.5;
                 const y = (Math.cos(time * 0.03 + i * 0.5) * height * 0.3) + height * 0.5 + scrollY * 0.1;
-                const size = 2 + Math.sin(time * 0.1 + i) * 1;
-
+                const size = 2 + Math.sin(time * 0.1 + i) * 2;
                 ctx.beginPath();
                 ctx.arc(x, y, size, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            time += 0.02;
+            time += 0.012; // slower overall animation
             requestAnimationFrame(drawPattern);
         }
 
-        // Start animation
         drawPattern();
     </script>
 </body>
