@@ -199,6 +199,10 @@ h2 {
     position: relative;
     margin: 0;
     display: block;
+    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+    overflow: auto; /* Enable scrolling if content is larger than iframe */
+    -webkit-transform: translateZ(0); /* Force hardware acceleration */
+    transform: translateZ(0);
 }
 
 .project-card:hover {

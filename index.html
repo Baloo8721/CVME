@@ -87,10 +87,16 @@
         </section>
     </div>
 
+    <!-- iOS Safari Fix Script -->
+    <script src="ios-fix.js"></script>
+    
     <script>
         // --- Animated Tech Mesh Background with ETH Morph ---
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
+        
+        // Add touch-action for better iOS handling
+        document.documentElement.style.touchAction = 'manipulation';
 
         // Responsive mesh settings
         function getMeshSettings() {
