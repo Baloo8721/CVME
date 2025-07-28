@@ -229,13 +229,26 @@ h2 {
     max-width: 100%;
     margin: 0;
     padding: 0; /* Removed side padding since it's now on the parent */
+    overflow: visible; /* Allow cards to extend beyond grid */
 }
 
 .project-card {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
+    width: 115%;
+    max-width: 115%;
+    margin-left: -7.5%; /* Negative margin to center the 115% width */
     box-sizing: border-box;
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+/* Reset for tablet and up */
+@media (min-width: 768px) {
+    .project-card {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+    }
 }
 
 /* Tablet and up */
