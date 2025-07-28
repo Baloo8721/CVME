@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C. Tyler Belisle - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="bgCanvas"></canvas>
+    <div class="container">
+        <header>
+            <h1>C. Tyler Belisle</h1>
+        </header>
+        <section id="about">
+            <h2>About Me</h2>
+            <p class="about-text">
+                A passionate and driven professional with a diverse background spanning healthcare, including ER,
+                pediatric critical care, ambulance, and flight medic roles, to real estate and web development. I thrive
+                on solving complex problems, whether in high-pressure medical environments, building innovative digital
+                tools, or crafting home projects. My goal is to leverage my technical expertise and hands-on experience
+                to create meaningful, impactful solutions. I’m eager to advance my career as an electrician’s
+                apprentice, aiming to become a journeyman and master electrician, with a strong interest in industrial
+                and commercial settings, PLC, A.I, automation, and robotics.
+            </p>
+            <p style="margin: 1.5rem 0 1.5rem 0;">
+                <a href="mailto:TylerBelisleFL@gmail.com"
+                    style="color: #a5b4fc; text-decoration: none;">TylerBelisleFL@gmail.com</a>
+            </p>
+            <div class="button-container">
+                <a href="cv.html" class="btn btn-primary">View CV</a>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-preview">
+                        <iframe src="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/ruler.html"
+                            loading="lazy"></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title-row">
+                            <h3 class="project-title">TradeMath Ruler</h3>
+                            <a href="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/ruler.html" target="_blank" class="open-site-btn">Open Site</a>
+                        </div>
+                        <p class="project-description">A web-based interactive ruler for trade professionals.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-preview">
+                        <iframe src="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/calculator.html"
+                            loading="lazy"></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title-row">
+                            <h3 class="project-title">TradeMath Calculator</h3>
+                            <a href="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/calculator.html" target="_blank" class="open-site-btn">Open Site</a>
+                        </div>
+                        <p class="project-description">A specialized calculator for common trade math problems.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-preview">
+                        <iframe src="https://baloo8721.github.io/Web3-Real-Estate-Calculator/"
+                            loading="lazy"></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title-row">
+                            <h3 class="project-title">Web3 Real Estate Calculator</h3>
+                            <a href="https://baloo8721.github.io/Web3-Real-Estate-Calculator/" target="_blank" class="open-site-btn">Open Site</a>
+                        </div>
+                        <p class="project-description">A calculator for analyzing real estate investments with Web3 integration.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-preview">
+                        <iframe src="https://baloo8721.github.io/WebRealtorFL-v2/"
+                            loading="lazy"></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title-row">
+                            <h3 class="project-title">Web Realtor FL v2</h3>
+                            <a href="https://baloo8721.github.io/WebRealtorFL-v2/" target="_blank" class="open-site-btn">Open Site</a>
+                        </div>
+                        <p class="project-description">A modern real estate website for Florida properties.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-preview">
+                        <iframe src="https://baloo8721.github.io/PoliticalCHESS-MEME-edition-/"
+                            loading="lazy"></iframe>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title-row">
+                            <h3 class="project-title">Political Chess - MEME Edition</h3>
+                            <a href="https://baloo8721.github.io/PoliticalCHESS-MEME-edition-/" target="_blank" class="open-site-btn">Open Site</a>
+                        </div>
+                        <p class="project-description">A political-themed chess game with meme characters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // --- Animated Tech Mesh Background with ETH Morph ---
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Responsive mesh settings
+        function getMeshSettings() {
+            const w = window.innerWidth;
+            if (w < 600) return { NODE_COUNT: 16, SPACING: 80, ANIMATION_RADIUS: 14 };
+            if (w < 1000) return { NODE_COUNT: 24, SPACING: 70, ANIMATION_RADIUS: 18 };
+            return { NODE_COUNT: 32, SPACING: 60, ANIMATION_RADIUS: 22 };
+        }
+        let NODE_COUNT = 32, SPACING = 60, ANIMATION_RADIUS = 22;
+        const NODE_RADIUS = 3;
+        const LINE_COLOR = 'rgba(59, 130, 246, 0.13)';
+        const FILL_COLOR = 'rgba(59, 130, 246, 0.08)';
+        const NODE_COLOR = 'rgba(59, 130, 246, 0.25)';
+
+
+
+        // Node structure
+        let nodes = [];
+        function randomNode(width, height) {
+            const angle = Math.random() * Math.PI * 2;
+            return {
+                baseX: Math.random() * width,
+                baseY: Math.random() * height,
+                angle: angle,
+                speed: 0.07 + Math.random() * 0.12, // slower, smoother
+                offset: Math.random() * 1000
+            };
+        }
+
+        function createNodes() {
+            nodes = [];
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodes.push(randomNode(canvas.width, canvas.height));
+            }
+        }
+
+        function getNodePos(node, t) {
+            // Gentle circular drift, slower
+            return {
+                x: node.baseX + Math.cos(t * node.speed + node.offset) * ANIMATION_RADIUS,
+                y: node.baseY + Math.sin(t * node.speed + node.offset) * ANIMATION_RADIUS
+            };
+        }
+
+        // Helper: distance between two points
+        function dist(a, b) {
+            return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        }
+
+        // Helper: find triangles (simple greedy mesh)
+        function getTriangles(positions) {
+            let triangles = [];
+            for (let i = 0; i < positions.length; i++) {
+                for (let j = i + 1; j < positions.length; j++) {
+                    for (let k = j + 1; k < positions.length; k++) {
+                        // Only connect close nodes
+                        if (
+                            dist(positions[i], positions[j]) < 180 &&
+                            dist(positions[j], positions[k]) < 180 &&
+                            dist(positions[k], positions[i]) < 180
+                        ) {
+                            triangles.push([positions[i], positions[j], positions[k]]);
+                        }
+                    }
+                }
+            }
+            return triangles;
+        }
+
+        // Resize and re-create nodes
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const settings = getMeshSettings();
+            NODE_COUNT = settings.NODE_COUNT;
+            SPACING = settings.SPACING;
+            ANIMATION_RADIUS = settings.ANIMATION_RADIUS;
+            createNodes();
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Animation variables
+        let time = 0;
+        let lastScrollY = 0;
+        let scrollY = 0;
+        
+        // Store start and target positions for morphing
+        let startPositions = [];
+        let targetPositions = [];
+        
+        // Initialize start positions (current layout)
+        function initStartPositions() {
+            startPositions = nodes.map(n => ({...getNodePos(n, time)}));
+        }
+        
+        // Generate random target positions
+        function generateRandomTargets() {
+            const newTargets = [];
+            for (let i = 0; i < NODE_COUNT; i++) {
+                newTargets.push({
+                    x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+                    y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1
+                });
+            }
+            return newTargets;
+        }
+        
+        // Initialize positions
+        initStartPositions();
+        targetPositions = generateRandomTargets();
+        
+        // Handle scroll events
+        window.addEventListener('scroll', () => {
+            lastScrollY = scrollY;
+            scrollY = window.scrollY;
+        });
+
+        function lerp(a, b, t) {
+            return a + (b - a) * t;
+        }
+
+        function drawPattern() {
+            const width = canvas.width;
+            const height = canvas.height;
+            ctx.clearRect(0, 0, width, height);
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#111827');
+            gradient.addColorStop(1, '#1f2937');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Animate node positions
+            const meshPositions = nodes.map(n => getNodePos(n, time));
+
+            // Calculate scroll progress (0 to 1)
+            const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+            const scrollProgress = Math.min(1, Math.max(0, scrollY / maxScroll));
+            
+            // Interpolate between start and target positions based on scroll
+            const displayPositions = startPositions.map((startPos, i) => {
+                const targetPos = targetPositions[i] || startPos;
+                return {
+                    x: startPos.x + (targetPos.x - startPos.x) * scrollProgress,
+                    y: startPos.y + (targetPos.y - startPos.y) * scrollProgress
+                };
+            });
+            
+            // Draw mesh with triangles and lines
+            const triangles = getTriangles(displayPositions);
+            for (let i = 0; i < triangles.length; i++) {
+                const tri = triangles[i];
+                // Slow down fill blinking
+                if ((Math.floor(time * 0.5) + i) % 7 === 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(tri[0].x, tri[0].y);
+                    ctx.lineTo(tri[1].x, tri[1].y);
+                    ctx.lineTo(tri[2].x, tri[2].y);
+                    ctx.closePath();
+                    ctx.fillStyle = FILL_COLOR;
+                    ctx.fill();
+                } else {
+                    ctx.beginPath();
+                    ctx.moveTo(tri[0].x, tri[0].y);
+                    ctx.lineTo(tri[1].x, tri[1].y);
+                    ctx.lineTo(tri[2].x, tri[2].y);
+                    ctx.closePath();
+                    ctx.strokeStyle = LINE_COLOR;
+                    ctx.stroke();
+                }
+            }
+            // Draw nodes
+            ctx.fillStyle = NODE_COLOR;
+            for (let i = 0; i < displayPositions.length; i++) {
+                const pos = displayPositions[i];
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, NODE_RADIUS, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Floating particles (unchanged)
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.3)';
+            for (let i = 0; i < 20; i++) {
+                const x = (Math.sin(time * 0.02 + i) * width * 0.3) + width * 0.5;
+                const y = (Math.cos(time * 0.03 + i * 0.5) * height * 0.3) + height * 0.5 + scrollY * 0.1;
+                const size = 2 + Math.sin(time * 0.1 + i) * 2;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            time += 0.012; // slower overall animation
+            requestAnimationFrame(drawPattern);
+        }
+
+        drawPattern();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
