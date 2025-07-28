@@ -41,7 +41,7 @@
                 <a href="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/ruler.html" target="_blank"
                     class="project-card">
                     <iframe src="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/ruler.html"
-                        style="width:100%;height:200px;border:none;border-radius:8px;"></iframe>
+                        loading="lazy"></iframe>
                     <div class="project-title-row">
                         <h3 class="project-title">TradeMath Ruler</h3>
                         <span class="open-site-btn">Open Site</span>
@@ -51,7 +51,7 @@
                 <a href="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/calculator.html" target="_blank"
                     class="project-card">
                     <iframe src="https://baloo8721.github.io/TradeMath-Ruler-Multimeter/calculator.html"
-                        style="width:100%;height:200px;border:none;border-radius:8px;"></iframe>
+                        loading="lazy"></iframe>
                     <div class="project-title-row">
                         <h3 class="project-title">TradeMath Calculator</h3>
                         <span class="open-site-btn">Open Site</span>
@@ -60,7 +60,7 @@
                 </a>
                 <a href="https://baloo8721.github.io/Web3-Real-Estate-Calculator/" target="_blank" class="project-card">
                     <iframe src="https://baloo8721.github.io/Web3-Real-Estate-Calculator/"
-                        style="width:100%;height:200px;border:none;border-radius:8px;"></iframe>
+                        loading="lazy"></iframe>
                     <div class="project-title-row">
                         <h3 class="project-title">Web3 Real Estate Calculator</h3>
                         <span class="open-site-btn">Open Site</span>
@@ -70,7 +70,7 @@
                 </a>
                 <a href="https://baloo8721.github.io/WebRealtorFL-v2/" target="_blank" class="project-card">
                     <iframe src="https://baloo8721.github.io/WebRealtorFL-v2/"
-                        style="width:100%;height:200px;border:none;border-radius:8px;"></iframe>
+                        loading="lazy"></iframe>
                     <div class="project-title-row">
                         <h3 class="project-title">Web Realtor FL v2</h3>
                         <span class="open-site-btn">Open Site</span>
@@ -80,7 +80,7 @@
                 <a href="https://baloo8721.github.io/PoliticalCHESS-MEME-edition-/" target="_blank"
                     class="project-card">
                     <iframe src="https://baloo8721.github.io/PoliticalCHESS-MEME-edition-/"
-                        style="width:100%;height:200px;border:none;border-radius:8px;"></iframe>
+                        loading="lazy"></iframe>
                     <div class="project-title-row">
                         <h3 class="project-title">Political Chess - MEME Edition</h3>
                         <span class="open-site-btn">Open Site</span>
@@ -109,60 +109,7 @@
         const FILL_COLOR = 'rgba(59, 130, 246, 0.08)';
         const NODE_COLOR = 'rgba(59, 130, 246, 0.25)';
 
-        // ETH logo points (normalized, centered)
-        const ETH_LOGO_POINTS = [
-            { x: 0.5, y: 0.08 }, // top
-            { x: 0.18, y: 0.38 }, // left
-            { x: 0.82, y: 0.38 }, // right
-            { x: 0.5, y: 0.52 }, // center
-            { x: 0.5, y: 0.60 }, // split (between center and bottom)
-            { x: 0.18, y: 0.92 }, // left bottom
-            { x: 0.82, y: 0.92 }  // right bottom
-        ];
 
-        // Helper to get ETH logo node positions for current canvas size
-        function getETHNodePositions(width, height) {
-            return ETH_LOGO_POINTS.map(pt => ({
-                x: pt.x * width,
-                y: pt.y * height
-            }));
-        }
-
-        // Helper to draw the ETH logo outline and internal triangles
-        function drawETHLogo(ctx, points) {
-            // Top triangle
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y); // top
-            ctx.lineTo(points[1].x, points[1].y); // left
-            ctx.lineTo(points[2].x, points[2].y); // right
-            ctx.closePath();
-            ctx.strokeStyle = LINE_COLOR;
-            ctx.stroke();
-
-            // Middle vertical line
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            ctx.lineTo(points[3].x, points[3].y);
-            ctx.lineTo(points[4].x, points[4].y);
-            ctx.stroke();
-
-            // Bottom triangle
-            ctx.beginPath();
-            ctx.moveTo(points[4].x, points[4].y); // split
-            ctx.lineTo(points[5].x, points[5].y); // left bottom
-            ctx.lineTo(points[6].x, points[6].y); // right bottom
-            ctx.closePath();
-            ctx.strokeStyle = LINE_COLOR;
-            ctx.stroke();
-
-            // Connect center to left/right
-            ctx.beginPath();
-            ctx.moveTo(points[3].x, points[3].y);
-            ctx.lineTo(points[1].x, points[1].y);
-            ctx.moveTo(points[3].x, points[3].y);
-            ctx.lineTo(points[2].x, points[2].y);
-            ctx.stroke();
-        }
 
         // Node structure
         let nodes = [];
@@ -232,8 +179,37 @@
 
         // Animation variables
         let time = 0;
+        let lastScrollY = 0;
         let scrollY = 0;
+        
+        // Store start and target positions for morphing
+        let startPositions = [];
+        let targetPositions = [];
+        
+        // Initialize start positions (current layout)
+        function initStartPositions() {
+            startPositions = nodes.map(n => ({...getNodePos(n, time)}));
+        }
+        
+        // Generate random target positions
+        function generateRandomTargets() {
+            const newTargets = [];
+            for (let i = 0; i < NODE_COUNT; i++) {
+                newTargets.push({
+                    x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+                    y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1
+                });
+            }
+            return newTargets;
+        }
+        
+        // Initialize positions
+        initStartPositions();
+        targetPositions = generateRandomTargets();
+        
+        // Handle scroll events
         window.addEventListener('scroll', () => {
+            lastScrollY = scrollY;
             scrollY = window.scrollY;
         });
 
@@ -255,66 +231,49 @@
             // Animate node positions
             const meshPositions = nodes.map(n => getNodePos(n, time));
 
-            // ETH symbol target positions
-            const ethPositions = getETHNodePositions(width, height);
-
-            // Morph factor: 0 (top of page, random mesh), 1 (scrolled down, ETH symbol)
+            // Calculate scroll progress (0 to 1)
             const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-            const morph = Math.min(1, scrollY / (maxScroll * 0.5));
-            const snapThreshold = 0.95;
-
-            let positions;
-            if (morph < snapThreshold) {
-                // Interpolate all mesh nodes toward ETH points
-                const ethPositions = getETHNodePositions(width, height);
-                positions = meshPositions.map((p, i) => {
-                    const target = ethPositions[i % ethPositions.length];
-                    return {
-                        x: lerp(p.x, target.x, morph),
-                        y: lerp(p.y, target.y, morph)
-                    };
-                });
-                // Draw mesh as before (triangles, lines, nodes)
-                const triangles = getTriangles(positions);
-                for (let i = 0; i < triangles.length; i++) {
-                    const tri = triangles[i];
-                    // Slow down fill blinking
-                    if ((Math.floor(time * 0.5) + i) % 7 === 0) {
-                        ctx.beginPath();
-                        ctx.moveTo(tri[0].x, tri[0].y);
-                        ctx.lineTo(tri[1].x, tri[1].y);
-                        ctx.lineTo(tri[2].x, tri[2].y);
-                        ctx.closePath();
-                        ctx.fillStyle = FILL_COLOR;
-                        ctx.fill();
-                    } else {
-                        ctx.beginPath();
-                        ctx.moveTo(tri[0].x, tri[0].y);
-                        ctx.lineTo(tri[1].x, tri[1].y);
-                        ctx.lineTo(tri[2].x, tri[2].y);
-                        ctx.closePath();
-                        ctx.strokeStyle = LINE_COLOR;
-                        ctx.stroke();
-                    }
-                }
-                // Draw nodes
-                ctx.fillStyle = NODE_COLOR;
-                for (let i = 0; i < positions.length; i++) {
+            const scrollProgress = Math.min(1, Math.max(0, scrollY / maxScroll));
+            
+            // Interpolate between start and target positions based on scroll
+            const displayPositions = startPositions.map((startPos, i) => {
+                const targetPos = targetPositions[i] || startPos;
+                return {
+                    x: startPos.x + (targetPos.x - startPos.x) * scrollProgress,
+                    y: startPos.y + (targetPos.y - startPos.y) * scrollProgress
+                };
+            });
+            
+            // Draw mesh with triangles and lines
+            const triangles = getTriangles(displayPositions);
+            for (let i = 0; i < triangles.length; i++) {
+                const tri = triangles[i];
+                // Slow down fill blinking
+                if ((Math.floor(time * 0.5) + i) % 7 === 0) {
                     ctx.beginPath();
-                    ctx.arc(positions[i].x, positions[i].y, NODE_RADIUS, 0, Math.PI * 2);
+                    ctx.moveTo(tri[0].x, tri[0].y);
+                    ctx.lineTo(tri[1].x, tri[1].y);
+                    ctx.lineTo(tri[2].x, tri[2].y);
+                    ctx.closePath();
+                    ctx.fillStyle = FILL_COLOR;
                     ctx.fill();
-                }
-            } else {
-                // Snap to ETH logo: use only the 7 points
-                const ethPoints = getETHNodePositions(width, height);
-                drawETHLogo(ctx, ethPoints);
-                // Draw only the 7 nodes
-                ctx.fillStyle = NODE_COLOR;
-                ethPoints.forEach(point => {
+                } else {
                     ctx.beginPath();
-                    ctx.arc(point.x, point.y, NODE_RADIUS, 0, Math.PI * 2);
-                    ctx.fill();
-                });
+                    ctx.moveTo(tri[0].x, tri[0].y);
+                    ctx.lineTo(tri[1].x, tri[1].y);
+                    ctx.lineTo(tri[2].x, tri[2].y);
+                    ctx.closePath();
+                    ctx.strokeStyle = LINE_COLOR;
+                    ctx.stroke();
+                }
+            }
+            // Draw nodes
+            ctx.fillStyle = NODE_COLOR;
+            for (let i = 0; i < displayPositions.length; i++) {
+                const pos = displayPositions[i];
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, NODE_RADIUS, 0, Math.PI * 2);
+                ctx.fill();
             }
 
             // Floating particles (unchanged)
