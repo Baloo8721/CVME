@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const iframe = card.querySelector('iframe');
             const openBtn = card.querySelector('.open-site-btn');
             
-            // Set initial styles
-            iframe.style.transition = 'height 0.3s ease, opacity 0.3s ease';
+            // Set initial styles with smooth transition (0.75 seconds)
+            iframe.style.transition = 'height 0.75s ease, opacity 0.75s ease';
             iframe.style.height = '0';
             iframe.style.opacity = '0';
             iframe.style.pointerEvents = 'none';
@@ -110,8 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add scroll event listener for mobile
     if (isMobile) {
         window.addEventListener('scroll', handleScroll, { passive: true });
-        // Initial check
-        updateActiveCard();
+        // Don't run initial check to prevent first card from being open
     } else {
         // Desktop behavior - hover/click to toggle
         projectCards.forEach(card => {
