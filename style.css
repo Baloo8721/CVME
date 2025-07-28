@@ -18,12 +18,12 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1100px; /* Increased from 900px to allow more width */
     margin: 0 auto;
-    padding: 2rem 1.5rem; /* Slightly less side padding on mobile */
+    padding: 2rem 1rem; /* Reduced side padding for more width */
     position: relative;
     z-index: 1;
-    width: 100%;
+    width: 95%; /* Increased from auto to use more viewport width */
     box-sizing: border-box;
 }
 
@@ -223,10 +223,11 @@ h2 {
 .project-grid {
     display: grid;
     grid-template-columns: 1fr; /* Single column on mobile */
-    gap: 1.5rem;
+    gap: 1.875rem; /* 30px gap between cards */
     width: 100%;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0 0.5rem; /* Add small padding to prevent edge touch */
 }
 
 .project-card {
@@ -239,12 +240,13 @@ h2 {
 /* Tablet and up */
 @media (min-width: 768px) {
     .project-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider cards */
         gap: 1.5rem;
     }
     
     .container {
-        padding: 2rem 2.5rem;
+        padding: 2rem 2rem;
+        width: 90%;
     }
 }
 
