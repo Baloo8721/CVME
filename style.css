@@ -212,22 +212,33 @@ h2 {
 
 @media (min-width: 1000px) {
     .project-grid {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
     }
 
     .project-card {
-        padding: 2rem;
-        min-height: 440px;
+        padding: 1.5rem;
+        min-height: auto;
+        height: auto;
     }
 
     .project-card iframe {
         height: 0;
         min-height: 0;
-        max-height: 350px;
+        max-height: 250px;
     }
     
     .project-card:hover iframe {
-        height: 350px;
-        min-height: 350px;
+        height: 250px;
+        min-height: 250px;
+    }
+    
+    .project-description {
+        margin-top: 0.5rem;
+        line-height: 1.5;
+    }
+    
+    .project-title-row {
+        margin: 0.5rem 0;
     }
 }
