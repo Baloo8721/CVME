@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Only set initial styles for mobile
             if (isMobile) {
-                iframe.style.transition = 'all 0.75s ease';
+                iframe.style.transition = 'all 0.7s ease';
                 iframe.style.height = '0';
                 iframe.style.opacity = '0';
                 iframe.style.pointerEvents = 'none';
