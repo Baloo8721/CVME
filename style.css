@@ -20,9 +20,11 @@ body {
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 1.5rem; /* Slightly less side padding on mobile */
     position: relative;
     z-index: 1;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -183,7 +185,7 @@ h2 {
     position: relative;
     overflow: visible;
     margin-bottom: 0.75rem;
-    transition: all 0.3s ease;
+    transition: all 0.75s ease; /* Updated to match iframe transition */
     min-height: 60px; /* Minimum height to show the title */
 }
 
@@ -193,7 +195,7 @@ h2 {
     border: none;
     border-radius: 8px;
     background: #111827;
-    transition: all 0.3s ease;
+    transition: height 0.75s ease, opacity 0.75s ease, min-height 0.75s ease, margin 0.75s ease;
     opacity: 0;
     pointer-events: none;
     position: relative;
@@ -214,8 +216,39 @@ h2 {
     opacity: 1;
     pointer-events: auto;
     margin: 0.75rem 0;
+    transition: height 0.75s ease, opacity 0.75s ease;
 }
 
+/* Mobile-first styles */
+.project-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.project-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .project-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .container {
+        padding: 2rem 2.5rem;
+    }
+}
+
+/* Desktop */
 @media (min-width: 1000px) {
     .project-grid {
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -229,14 +262,21 @@ h2 {
     }
 
     .project-card iframe {
-        height: 0;
-        min-height: 0;
+        height: 0 !important;
+        min-height: 0 !important;
         max-height: 250px;
+        opacity: 0 !important;
+        transition: all 0.75s ease !important;
+        pointer-events: none !important;
+        margin: 0 !important;
     }
     
     .project-card:hover iframe {
-        height: 250px;
-        min-height: 250px;
+        height: 250px !important;
+        min-height: 250px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        margin: 0.75rem 0 !important;
     }
     
     .project-description {

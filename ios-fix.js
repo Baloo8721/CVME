@@ -15,11 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const iframe = card.querySelector('iframe');
             const openBtn = card.querySelector('.open-site-btn');
             
-            // Set initial styles with smooth transition (0.75 seconds)
-            iframe.style.transition = 'height 0.75s ease, opacity 0.75s ease';
-            iframe.style.height = '0';
-            iframe.style.opacity = '0';
-            iframe.style.pointerEvents = 'none';
+            // Only set initial styles for mobile
+            if (isMobile) {
+                iframe.style.transition = 'all 0.75s ease';
+                iframe.style.height = '0';
+                iframe.style.opacity = '0';
+                iframe.style.pointerEvents = 'none';
+            }
             
             // Handle click on open button
             if (openBtn) {
