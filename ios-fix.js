@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add scroll event listener for mobile
     if (isMobile) {
+        // Make sure all iframes start closed
+        document.querySelectorAll('.project-card iframe').forEach(iframe => {
+            iframe.style.height = '0';
+            iframe.style.opacity = '0';
+            iframe.style.pointerEvents = 'none';
+        });
+        
         window.addEventListener('scroll', handleScroll, { passive: true });
         // Don't run initial check to prevent first card from being open
     } else {
