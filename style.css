@@ -57,6 +57,7 @@ h2 {
 
 #projects {
     margin-bottom: 16rem;
+    padding: 0 0.5rem; /* Match the grid padding */
 }
 
 .btn {
@@ -227,7 +228,7 @@ h2 {
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding: 0 0.5rem; /* Add small padding to prevent edge touch */
+    padding: 0; /* Removed side padding since it's now on the parent */
 }
 
 .project-card {
