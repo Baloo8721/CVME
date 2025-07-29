@@ -4,9 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christopher Tyler Belisle - Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Add loading class to body immediately to prevent flash
+        document.documentElement.classList.add('loading');
+        
+        // Add transition effect on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Only show transition if we're coming from index.html
+            if (document.referrer.includes('index.html') || sessionStorage.getItem('transitioning') === 'true') {
+                const transitionOverlay = document.createElement('div');
+                transitionOverlay.className = 'transition-overlay';
+                document.body.appendChild(transitionOverlay);
+                
+                // Create close button
+                const closeButton = document.createElement('div');
+                closeButton.className = 'close-button';
+                closeButton.innerHTML = '×';
+                document.body.appendChild(closeButton);
+                
+                // Handle close button click
+                closeButton.addEventListener('click', () => {
+                    // Set transitioning flag
+                    sessionStorage.setItem('transitioning', 'true');
+                    
+                    // Create reverse transition
+                    const reverseOverlay = document.createElement('div');
+                    reverseOverlay.className = 'transition-overlay';
+                    document.body.appendChild(reverseOverlay);
+                    
+                    // Create pixel blocks for reverse animation
+                    const blockSize = 30;
+                    const cols = Math.ceil(window.innerWidth / blockSize) + 1;
+                    const rows = Math.ceil(window.innerHeight / blockSize) + 1;
+                    
+                    for (let row = rows - 1; row >= 0; row--) {
+                        for (let col = cols - 1; col >= 0; col--) {
+                            setTimeout(() => {
+                                const block = document.createElement('div');
+                                block.className = 'pixel-block';
+                                block.style.animation = 'pixelate 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                                block.style.width = `${blockSize}px`;
+                                block.style.height = `${blockSize}px`;
+                                block.style.left = `${col * blockSize}px`;
+                                block.style.top = `${row * blockSize}px`;
+                                reverseOverlay.appendChild(block);
+                            }, Math.random() * 200);
+                        }
+                    }
+                    
+                    // Navigate back after animation
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 700);
+                });
+                
+                // Create pixel blocks with staggered animation
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < cols; col++) {
+                        setTimeout(() => {
+                            const block = document.createElement('div');
+                            block.className = 'pixel-block';
+                            block.style.width = `${blockSize}px`;
+                            block.style.height = `${blockSize}px`;
+                            block.style.left = `${col * blockSize}px`;
+                            block.style.top = `${row * blockSize}px`;
+                            transitionOverlay.appendChild(block);
+                        }, Math.random() * 200); // Random stagger for organic feel
+                    }
+                }
+                
+                // Show content after animation
+                setTimeout(() => {
+                    document.documentElement.classList.remove('loading');
+                    document.documentElement.style.opacity = 1;
+                    
+                    // Remove overlay after animation completes
+                    setTimeout(() => {
+                        if (transitionOverlay.parentNode) {
+                            transitionOverlay.parentNode.removeChild(transitionOverlay);
+                        }
+                    }, 1000);
+                }, 800);
+            }
+        });
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* Hide content initially to prevent flash */
+        body.loading {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            overflow: hidden;
+        }
+        
+        /* Sticky close button */
+        .close-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2000;
+            border: 2px solid white;
+            transition: all 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background: rgba(255, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+        
+        /* Transition overlay styles */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1000;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .pixel-block {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9); /* Semi-transparent black */
+            opacity: 0;
+            animation: reverse-pixelate 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            pointer-events: none;
+            transform-origin: center;
+            will-change: transform, opacity;
+            mix-blend-mode: multiply; /* Blend with the background */
+        }
+
+        @keyframes reverse-pixelate {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+    <style>
+        /* Add the pixelate animation for the close button */
+        @keyframes pixelate {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f9fafb;
@@ -93,12 +264,7 @@
                 <span class="hidden sm:inline">•</span>
                 <span>Land O' Lakes, FL</span>
                 <span class="hidden sm:inline">•</span>
-                <a href="resume.pdf" class="inline-flex items-center px-2 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm h-6" download="resume.pdf" style="line-height: 1rem;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                    <span>PDF</span>
-                </a>
+
             </div>
         </header>
 
@@ -213,6 +379,15 @@
                         <p class="education-item">High School Diploma (May 2005)</p>
                     </li>
                 </ul>
+            </div>
+            <!-- Download PDF Button -->
+            <div class="mt-8 text-center">
+                <a href="resume.pdf" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm" download="resume.pdf">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <span>PDF</span>
+                </a>
             </div>
         </section>
 
