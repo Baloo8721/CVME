@@ -141,57 +141,58 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Add loading class to body immediately to prevent flash
+            document.documentElement.classList.add('loading');
+            
+            // Show content after a short delay to prevent flash
+            setTimeout(() => {
+                document.documentElement.classList.remove('loading');
+                document.documentElement.style.opacity = 1;
+            }, 50);
+            
             const viewCvButton = document.getElementById('view-cv-button');
             if (viewCvButton) {
-                viewCvButton.addEventListener('click', async (e) => {
+                viewCvButton.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    // Disable the button to prevent multiple clicks
-                    viewCvButton.style.pointerEvents = 'none';
-                    
-                    // Set a flag to indicate we're in a transition
+                    // Set transitioning flag
                     sessionStorage.setItem('transitioning', 'true');
                     
-                    // Create and show the overlay
+                    // Create transition overlay
                     const transitionOverlay = document.createElement('div');
                     transitionOverlay.className = 'transition-overlay';
                     document.body.appendChild(transitionOverlay);
                     
-                    // Force reflow to ensure the overlay is in the DOM before animating
-                    await new Promise(resolve => requestAnimationFrame(resolve));
-                    
-                    // Create pixel blocks with staggered animation
+                    // Create pixel blocks for the animation
                     const blockSize = 30;
                     const cols = Math.ceil(window.innerWidth / blockSize) + 1;
                     const rows = Math.ceil(window.innerHeight / blockSize) + 1;
-                    const totalDuration = 800; // Slightly faster transition
                     
-                    // Create blocks with staggered animation
-                    for (let row = 0; row < rows; row++) {
-                        for (let col = 0; col < cols; col++) {
+                    // Add pixel blocks with staggered animation (reverse order for exit)
+                    for (let row = rows - 1; row >= 0; row--) {
+                        for (let col = cols - 1; col >= 0; col--) {
                             setTimeout(() => {
                                 const block = document.createElement('div');
                                 block.className = 'pixel-block';
+                                block.style.animation = 'pixelate 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
                                 block.style.width = `${blockSize}px`;
                                 block.style.height = `${blockSize}px`;
                                 block.style.left = `${col * blockSize}px`;
                                 block.style.top = `${row * blockSize}px`;
                                 transitionOverlay.appendChild(block);
-                            }, Math.random() * 200); // Faster random stagger
+                            }, Math.random() * 200);
                         }
                     }
                     
-                    // Redirect after animation completes
+                    // Navigate after the transition completes
                     setTimeout(() => {
                         window.location.href = 'cv.html';
-                    }, totalDuration);
+                    }, 700);
                 });
             }
         });
-    </script>
-    
-    <script>
-        // --- Animated Tech Mesh Background with ETH Morph ---
+
+        // Canvas setup
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         

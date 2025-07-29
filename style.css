@@ -297,3 +297,63 @@ h2 {
         margin: 0.5rem 0;
     }
 }
+
+/* Transition Overlay */
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 10000;
+    pointer-events: none;
+    transition: background 0.7s ease-in-out;
+    will-change: background;
+}
+
+/* Ensure the overlay is above all content */
+.transition-overlay {
+    position: fixed;
+    z-index: 10000;
+}
+
+/* Ensure the body doesn't scroll during transition */
+body.transitioning {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Pixel block animation */
+@keyframes pixelate {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        background: rgba(0, 0, 0, 0.9);
+    }
+}
+
+.pixel-block {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: center;
+    will-change: transform, opacity;
+    mix-blend-mode: multiply;
+}
+
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    pointer-events: none;
+    overflow: hidden;
+}
