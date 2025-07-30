@@ -247,11 +247,6 @@ h2 {
         max-width: 115%;
         margin-left: -7.5%;
     }
-    /* Make iframes 110% width on very small devices */
-    .project-card iframe {
-        width: 110%;
-        margin-left: -5%;
-    }
 }
 
 /* Tablet and up */
