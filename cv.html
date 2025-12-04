@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <script>
         // Add loading class to body immediately to prevent flash
         document.documentElement.classList.add('loading');
-        
+
         // Add transition effect on page load
         document.addEventListener('DOMContentLoaded', () => {
             // Only show transition if we're coming from index.html
@@ -16,28 +17,28 @@
                 const transitionOverlay = document.createElement('div');
                 transitionOverlay.className = 'transition-overlay';
                 document.body.appendChild(transitionOverlay);
-                
+
                 // Create close button
                 const closeButton = document.createElement('div');
                 closeButton.className = 'close-button';
                 closeButton.innerHTML = '×';
                 document.body.appendChild(closeButton);
-                
+
                 // Handle close button click
                 closeButton.addEventListener('click', () => {
                     // Set transitioning flag
                     sessionStorage.setItem('transitioning', 'true');
-                    
+
                     // Create reverse transition
                     const reverseOverlay = document.createElement('div');
                     reverseOverlay.className = 'transition-overlay';
                     document.body.appendChild(reverseOverlay);
-                    
+
                     // Create pixel blocks for reverse animation
                     const blockSize = 30;
                     const cols = Math.ceil(window.innerWidth / blockSize) + 1;
                     const rows = Math.ceil(window.innerHeight / blockSize) + 1;
-                    
+
                     for (let row = rows - 1; row >= 0; row--) {
                         for (let col = cols - 1; col >= 0; col--) {
                             setTimeout(() => {
@@ -52,13 +53,13 @@
                             }, Math.random() * 200);
                         }
                     }
-                    
+
                     // Navigate back after animation
                     setTimeout(() => {
                         window.location.href = 'index.html';
                     }, 700);
                 });
-                
+
                 // Create pixel blocks with staggered animation
                 for (let row = 0; row < rows; row++) {
                     for (let col = 0; col < cols; col++) {
@@ -73,12 +74,12 @@
                         }, Math.random() * 200); // Random stagger for organic feel
                     }
                 }
-                
+
                 // Show content after animation
                 setTimeout(() => {
                     document.documentElement.classList.remove('loading');
                     document.documentElement.style.opacity = 1;
-                    
+
                     // Remove overlay after animation completes
                     setTimeout(() => {
                         if (transitionOverlay.parentNode) {
@@ -98,7 +99,7 @@
             transition: opacity 0.5s ease-in-out;
             overflow: hidden;
         }
-        
+
         /* Sticky close button */
         .close-button {
             position: fixed;
@@ -118,12 +119,12 @@
             border: 2px solid white;
             transition: all 0.3s ease;
         }
-        
+
         .close-button:hover {
             background: rgba(255, 0, 0, 0.8);
             transform: scale(1.1);
         }
-        
+
         /* Transition overlay styles */
         .transition-overlay {
             position: fixed;
@@ -139,13 +140,15 @@
 
         .pixel-block {
             position: absolute;
-            background: rgba(0, 0, 0, 0.9); /* Semi-transparent black */
+            background: rgba(0, 0, 0, 0.9);
+            /* Semi-transparent black */
             opacity: 0;
             animation: reverse-pixelate 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             pointer-events: none;
             transform-origin: center;
             will-change: transform, opacity;
-            mix-blend-mode: multiply; /* Blend with the background */
+            mix-blend-mode: multiply;
+            /* Blend with the background */
         }
 
         @keyframes reverse-pixelate {
@@ -153,9 +156,11 @@
                 opacity: 0;
                 transform: scale(0.3);
             }
+
             50% {
                 opacity: 0.9;
             }
+
             100% {
                 opacity: 0;
                 transform: scale(1.2);
@@ -169,25 +174,29 @@
                 opacity: 0;
                 transform: scale(0.3);
             }
+
             50% {
                 opacity: 1;
             }
+
             100% {
                 opacity: 1;
                 transform: scale(1.2);
             }
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f9fafb;
             color: #1f2937;
         }
+
         .section-header {
             position: relative;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
+
         .section-header::after {
             content: '';
             position: absolute;
@@ -197,6 +206,7 @@
             height: 3px;
             background-color: #3b82f6;
         }
+
         .job-card {
             background: #ffffff;
             border-radius: 8px;
@@ -204,56 +214,70 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
         }
+
         .job-card:hover {
             transform: translateY(-4px);
         }
+
         .job-title {
             font-weight: 600;
             color: #1f2937;
         }
+
         .job-date {
             color: #6b7280;
             font-size: 0.9rem;
         }
+
         .contact-link {
             color: #3b82f6;
             transition: color 0.2s ease;
         }
+
         .contact-link:hover {
             color: #1d4ed8;
         }
+
         .education-item {
             color: #6b7280;
             font-size: 0.9rem;
         }
+
         .education-title {
             font-weight: 600;
             color: #1f2937;
         }
+
         .references-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
         }
+
         @media (max-width: 640px) {
             .container {
                 padding: 1rem;
             }
+
             h1 {
                 font-size: 1.75rem;
             }
+
             .job-card {
                 padding: 1rem;
             }
+
             .section-header {
                 font-size: 1.25rem;
             }
+
             .references-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body class="antialiased">
     <div class="container max-w-3xl mx-auto px-4 py-6 sm:py-12 sm:px-6 lg:px-8">
         <!-- Header -->
@@ -261,6 +285,8 @@
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Christopher Tyler Belisle</h1>
             <div class="flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base text-gray-600 mt-3">
                 <a href="mailto:TylerBelisleFL@gmail.com" class="contact-link">TylerBelisleFL@gmail.com</a>
+                <span class="hidden sm:inline">•</span>
+                <span>813-482-8671</span>
                 <span class="hidden sm:inline">•</span>
                 <span>Land O' Lakes, FL</span>
                 <span class="hidden sm:inline">•</span>
@@ -272,7 +298,12 @@
         <section class="mb-10 sm:mb-12">
             <h2 class="text-lg sm:text-xl font-semibold section-header">About Me</h2>
             <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
-                Determined and hands-on professional eager to start an electrician apprenticeship and work toward journeyman status. Ready to bring problem-solving skills, leadership experience, and drive to succeed in the electrical trade.
+                Determined and hands-on worker eager to begin a long-term career as an electrician apprentice and work
+                toward journeyman status. Brings strong problem-solving skills, work ethic, and a genuine willingness to
+                learn. Strengthened by years of experience as a paramedic working under pressure, harsh conditions and
+                prioritizing
+                safety. Motivated to grow through hard work and continuous learning while delivering quality results to
+                succeed in the electrical trade.
             </p>
         </section>
 
@@ -282,19 +313,24 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="job-card">
                     <h3 class="font-medium text-gray-900">Hands-On</h3>
-                    <p class="text-gray-600 text-sm">Power tools from construction, medical field, automotive, homeownership; lifelong learner/DIY</p>
+                    <p class="text-gray-600 text-sm">Tools and equipment from Emergency services, masonry trade,
+                        automotive and homeownership; lifelong learner</p>
                 </div>
                 <div class="job-card">
-                    <h3 class="font-medium text-gray-900">Technical</h3>
-                    <p class="text-gray-600 text-sm">Programming, automation, web development</p>
+                    <h3 class="font-medium text-gray-900">Technical/Hobbies</h3>
+                    <p class="text-gray-600 text-sm">Some Programming, automation, web development - <a
+                            href="https://baloo8721.github.io/CVME/" class="text-blue-600 hover:underline"
+                            target="_blank">GitHub</a></p>
                 </div>
                 <div class="job-card">
                     <h3 class="font-medium text-gray-900">Interest</h3>
-                    <p class="text-gray-600 text-sm">Industrial/commercial electrical, PLC systems/automation, robotics</p>
+                    <p class="text-gray-600 text-sm">Commercial/Industrial electrical, learning PLC systems/automation
+                    </p>
                 </div>
                 <div class="job-card">
-                    <h3 class="font-medium text-gray-900">Leadership & Strengths</h3>
-                    <p class="text-gray-600 text-sm">Managing teams, training staff, improving workflows; quick learner, thrives under pressure, strong communicator</p>
+                    <h3 class="font-medium text-gray-900">Strengths</h3>
+                    <p class="text-gray-600 text-sm">Very teachable, Quick learner, thrives under pressure, strong
+                        communicator</p>
                 </div>
             </div>
         </section>
@@ -304,53 +340,57 @@
             <h2 class="text-lg sm:text-xl font-semibold section-header">Work History</h2>
             <div class="space-y-4 sm:space-y-6">
                 <div class="job-card">
-                    <h3 class="job-title">Realtor/Real Estate</h3>
-                    <p class="job-date">Keller Williams Brokerage, Tampa, FL | Aug 2021 - Present</p>
+                    <h3 class="job-title">Realtor</h3>
+                    <p class="job-date">Keller Williams Brokerage, Tampa, FL | Aug 2021 – Present</p>
                     <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
+                        <li>Coordinated real estate transactions for clients</li>
                         <li>Solve real estate problems with analysis and clear communication</li>
-                        <li>Built A.I. automation tools for CRM/referral systems</li>
+                        <li>Building A.I. automation tools/sites for CRM/referral systems</li>
                     </ul>
                 </div>
                 <div class="job-card">
-                    <h3 class="job-title">Parts/Service/Sales Team Leader</h3>
-                    <p class="job-date">BMW/MINI & Jerry Ulm Jeep/Dodge, Tampa, FL | May 2018 - 2021</p>
+                    <h3 class="job-title">Parts/Service/Sales Advisor</h3>
+                    <p class="job-date">Morgan Auto Group BMW/DODGE, Tampa, FL | May 2018 – Sep 2021</p>
                     <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-                        <li>Managed accessory department, improved sales through workflows/training</li>
-                        <li>Led teams, handled scheduling/operations</li>
-                        <li>Used diagnostic tools for automotive problem-solving</li>
+                        <li>Supervised custom accessory department, improved sales through
+                            workflows/training/communication</li>
+                        <li>Kept and maintained local inventory, part ordering/deliveries for shop clients and wholesale
+                            businesses, worked in sales, parts and service</li>
                     </ul>
                 </div>
                 <div class="job-card">
                     <h3 class="job-title">Neonatal Critical Care Paramedic/ER & Transport</h3>
-                    <p class="job-date">St. Joseph's Children's Hospital, Tampa, FL | Mar 2015 - May 2018</p>
+                    <p class="job-date">St. Joseph's Children's Hospital, Tampa, FL | Mar 2015 – May 2018</p>
                     <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
                         <li>Critical care in fast-paced environments (ER, ambulance, helicopter, fixed-wing)</li>
-                        <li>Monitored EKGs, managed advanced care/medications</li>
+                        <li>Monitored EKGs, managed advanced care/airway/treatment</li>
                         <li>Emergency vehicle operator</li>
+                        <li>Rapid response team for womens/Childrens hospital and ER</li>
                     </ul>
                 </div>
                 <div class="job-card">
                     <h3 class="job-title">Paramedic</h3>
-                    <p class="job-date">AMR (American Medical Response), Tampa, FL | May 2012 - Mar 2015</p>
+                    <p class="job-date">AMR (American Medical Response), Tampa, FL | May 2012 – March 2015</p>
                     <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
                         <li>Delivered life support using advanced medical equipment</li>
-                        <li>Managed IVs, airways, drug dosing, EKGs under pressure</li>
+                        <li>Managed IVs, airways, drug dosing, EKGs under pressure and patient transports</li>
                     </ul>
                 </div>
                 <div class="job-card">
                     <h3 class="job-title">Mortgage Law Specialist</h3>
-                    <p class="job-date">Wolfe Law & Associates, Tampa, FL | May 2007 - May 2014</p>
+                    <p class="job-date">Wolfe Law & Associates, Tampa, FL | May 2007 – May 2014</p>
                     <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
                         <li>Quality control/auditing of mortgage documents</li>
-                        <li>Coordinated with clients/courts</li>
+                        <li>Coordinated with clients/courts as liaison</li>
                         <li>Technical support to lender clients</li>
                     </ul>
                 </div>
                 <div class="job-card">
                     <h3 class="job-title">Laborer</h3>
-                    <p class="job-date">Lazzara Concrete & Masonry, Tampa, FL | Mar 2004 - 2010</p>
+                    <p class="job-date">Lazzara Concrete & Masonry, Tampa, FL | Feb 2004 – 2010</p>
                     <ul class="list-disc list-inside text-gray-600 text-sm mt-2 space-y-1">
-                        <li>Operated power tools/equipment on construction sites</li>
+                        <li>Familiar with tools/equipment on construction and job sites</li>
+                        <li>General laborer and helper with owner</li>
                         <li>Gained hands-on trade experience</li>
                     </ul>
                 </div>
@@ -364,27 +404,39 @@
                 <ul class="list-none text-sm space-y-3">
                     <li>
                         <span class="education-title">Skillcat (Online)</span>
-                        <p class="education-item">Electrical Trade School Certificate - <a href="https://skillcat.app/mod/customcert/verify_certificate.php?code=52FAAj1sZp&qrcode=1" class="text-blue-600 hover:underline" target="_blank">View</a></p>
+                        <p class="education-item">Electrical Trade School Certificate - <a
+                                href="https://skillcat.app/mod/customcert/verify_certificate.php?code=52FAAj1sZp&qrcode=1"
+                                class="text-blue-600 hover:underline" target="_blank">view</a></p>
                     </li>
                     <li>
                         <span class="education-title">Realtor</span>
-                        <p class="education-item">July 2021, License <a href="https://www.myfloridalicense.com/licenseRelation.asp?SID=&licid=8015824" class="text-blue-600 hover:underline" target="_blank">#SL3510156</a></p>
+                        <p class="education-item">July/2021 <a
+                                href="https://www.myfloridalicense.com/licenseRelation.asp?SID=&licid=8015824"
+                                class="text-blue-600 hover:underline" target="_blank">#SL3510156</a> - <a
+                                href="https://www.myfloridalicense.com/licenseRelation.asp?SID=&licid=8015824"
+                                class="text-blue-600 hover:underline" target="_blank">view</a></p>
                     </li>
                     <li>
-                        <span class="education-title">Hillsborough Community College/FL Medical Training Institute</span>
-                        <p class="education-item">State Certified Paramedic (Feb 2012), State Fire Fighter II (Oct 2012), EMT (2012)</p>
+                        <span class="education-title">Hillsborough Community College/FL Medical Training
+                            Institute</span>
+                        <p class="education-item">State Certified Paramedic (Feb 2012), State Fire Fighter II (Oct
+                            2012), EMT (2012)</p>
                     </li>
                     <li>
                         <span class="education-title">Gaither High School, Tampa, FL</span>
-                        <p class="education-item">High School Diploma</p>
+                        <p class="education-item">High School Diploma (May 2005)</p>
                     </li>
                 </ul>
             </div>
             <!-- Download PDF Button -->
             <div class="mt-8 text-center">
-                <a href="resume.pdf" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm" download="resume.pdf">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                <a href="resume.pdf"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
+                    download="resume.pdf">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                     </svg>
                     <span>PDF</span>
                 </a>
@@ -392,4 +444,5 @@
         </section>
 
 </body>
+
 </html>
